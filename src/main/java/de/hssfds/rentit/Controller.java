@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Controller {
 
     @FXML
@@ -31,6 +34,17 @@ public class Controller {
     private void onVermieterClear() {
         txtVermieterVorname.setText("hello world: vorname");
         txtVermieterName.setText("hello world: name");
+        try {
+            //Connection meineConnection = DBConnection.getConnection();
+            VermieterDAO vermieterDAO = new VermieterDAO();
+            Vermieter vermieter = new Vermieter(1, "Max", "Mustermann");
+            vermieterDAO.createVermieter(vermieter);
+        }
+        catch (Exception ex) {
+
+            ex.printStackTrace();;
+
+        }
     }
 
     @FXML
