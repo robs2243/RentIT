@@ -2,15 +2,12 @@ package de.hssfds.rentit;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class Controller {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+    private TextField txtVermieterVorname;
 
     @FXML
     private void onVermieterAdd() {
@@ -24,12 +21,12 @@ public class Controller {
 
     @FXML
     private void onVermieterDelete() {
-        // TODO: Implementierung ergänzen
+
     }
 
     @FXML
     private void onVermieterClear() {
-        // TODO: Implementierung ergänzen
+        txtVermieterVorname.setText("hello world: vorname");
     }
 
     @FXML
