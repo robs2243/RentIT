@@ -10,6 +10,9 @@ public class Controller {
     private TextField txtVermieterVorname;
 
     @FXML
+    private TextField txtVermieterName;
+
+    @FXML
     private void onVermieterAdd() {
         // TODO: Implementierung ergänzen
     }
@@ -27,6 +30,7 @@ public class Controller {
     @FXML
     private void onVermieterClear() {
         txtVermieterVorname.setText("hello world: vorname");
+        txtVermieterName.setText("hello world: name");
     }
 
     @FXML
