@@ -1,16 +1,299 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="de.hssfds.rentit.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="de.hssfds.rentit.Controller"
+            prefWidth="1100" prefHeight="720">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <!-- ==================== TOP: Header ==================== -->
+    <top>
+        <VBox alignment="CENTER" spacing="2" style="-fx-background-color: #2c3e50; -fx-padding: 14;">
+            <Label text="🏠 Rent-IT  —  Ferienvermietung" style="-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold;"/>
+            <Label text="Datenbankverwaltung" style="-fx-text-fill: #bdc3c7; -fx-font-size: 13;"/>
+        </VBox>
+    </top>
+
+    <!-- ==================== CENTER: TabPane ==================== -->
+    <center>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" style="-fx-padding: 6;">
+
+            <!-- ========== TAB 1: Vermieter (Landlord) ========== -->
+            <Tab text="Vermieter">
+                <VBox spacing="12">
+                    <padding><Insets top="12" right="14" bottom="12" left="14"/></padding>
+
+                    <!-- Input Form -->
+                    <TitledPane text="Vermieter anlegen / bearbeiten" collapsible="false">
+                        <GridPane hgap="12" vgap="10">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <Label text="VNr (Primärschlüssel):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtVermieterVNr" promptText="z.B. 1001" prefWidth="200"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="Name:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtVermieterName" promptText="Nachname" prefWidth="200"
+                                       GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                            <Label text="Vorname:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtVermieterVorname" promptText="Vorname" prefWidth="200"
+                                       GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+
+                            <!-- Buttons -->
+                            <HBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                  GridPane.columnSpan="5" alignment="CENTER_LEFT">
+                                <Button fx:id="btnVermieterAdd" text="➕ Hinzufügen" onAction="#onVermieterAdd"
+                                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermieterUpdate" text="✏️ Aktualisieren" onAction="#onVermieterUpdate"
+                                        style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermieterDelete" text="🗑️ Löschen" onAction="#onVermieterDelete"
+                                        style="-fx-background-color: #c0392b; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermieterClear" text="🧹 Felder leeren" onAction="#onVermieterClear"/>
+                            </HBox>
+                        </GridPane>
+                    </TitledPane>
+
+                    <!-- Table -->
+                    <TableView fx:id="tblVermieter" VBox.vgrow="ALWAYS" prefHeight="400">
+                        <columns>
+                            <TableColumn fx:id="colVermieterVNr" text="VNr" prefWidth="100"/>
+                            <TableColumn fx:id="colVermieterName" text="Name" prefWidth="220"/>
+                            <TableColumn fx:id="colVermieterVorname" text="Vorname" prefWidth="220"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Keine Vermieter vorhanden."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ========== TAB 2: Mieter (Tenant) ========== -->
+            <Tab text="Mieter">
+                <VBox spacing="12">
+                    <padding><Insets top="12" right="14" bottom="12" left="14"/></padding>
+
+                    <TitledPane text="Mieter anlegen / bearbeiten" collapsible="false">
+                        <GridPane hgap="12" vgap="10">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <Label text="MNr (Primärschlüssel):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtMieterMNr" promptText="z.B. 2001" prefWidth="200"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="Name:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtMieterName" promptText="Nachname" prefWidth="200"
+                                       GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                            <Label text="Vorname:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtMieterVorname" promptText="Vorname" prefWidth="200"
+                                       GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+
+                            <HBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                  GridPane.columnSpan="5" alignment="CENTER_LEFT">
+                                <Button fx:id="btnMieterAdd" text="➕ Hinzufügen" onAction="#onMieterAdd"
+                                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                <Button fx:id="btnMieterUpdate" text="✏️ Aktualisieren" onAction="#onMieterUpdate"
+                                        style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                                <Button fx:id="btnMieterDelete" text="🗑️ Löschen" onAction="#onMieterDelete"
+                                        style="-fx-background-color: #c0392b; -fx-text-fill: white;"/>
+                                <Button fx:id="btnMieterClear" text="🧹 Felder leeren" onAction="#onMieterClear"/>
+                            </HBox>
+                        </GridPane>
+                    </TitledPane>
+
+                    <TableView fx:id="tblMieter" VBox.vgrow="ALWAYS" prefHeight="400">
+                        <columns>
+                            <TableColumn fx:id="colMieterMNr" text="MNr" prefWidth="100"/>
+                            <TableColumn fx:id="colMieterName" text="Name" prefWidth="220"/>
+                            <TableColumn fx:id="colMieterVorname" text="Vorname" prefWidth="220"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Keine Mieter vorhanden."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ========== TAB 3: Objekt (Property) ========== -->
+            <Tab text="Objekt">
+                <VBox spacing="12">
+                    <padding><Insets top="12" right="14" bottom="12" left="14"/></padding>
+
+                    <TitledPane text="Objekt anlegen / bearbeiten" collapsible="false">
+                        <GridPane hgap="12" vgap="10">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <Label text="ONr (Primärschlüssel):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtObjektONr" promptText="z.B. 3001" prefWidth="160"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="Größe (m²):" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtObjektGroesse" promptText="z.B. 85" prefWidth="120"
+                                       GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                            <Label text="Mietpreis (€/Tag):" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtObjektMietpreis" promptText="z.B. 120.00" prefWidth="140"
+                                       GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+
+                            <Label text="VNr (Vermieter FK):" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <ComboBox fx:id="cmbObjektVNr" promptText="Vermieter wählen" prefWidth="200"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <HBox spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="1"
+                                  GridPane.columnSpan="4" alignment="CENTER_LEFT">
+                                <Button fx:id="btnObjektAdd" text="➕ Hinzufügen" onAction="#onObjektAdd"
+                                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                <Button fx:id="btnObjektUpdate" text="✏️ Aktualisieren" onAction="#onObjektUpdate"
+                                        style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                                <Button fx:id="btnObjektDelete" text="🗑️ Löschen" onAction="#onObjektDelete"
+                                        style="-fx-background-color: #c0392b; -fx-text-fill: white;"/>
+                                <Button fx:id="btnObjektClear" text="🧹 Felder leeren" onAction="#onObjektClear"/>
+                            </HBox>
+                        </GridPane>
+                    </TitledPane>
+
+                    <TableView fx:id="tblObjekt" VBox.vgrow="ALWAYS" prefHeight="400">
+                        <columns>
+                            <TableColumn fx:id="colObjektONr" text="ONr" prefWidth="80"/>
+                            <TableColumn fx:id="colObjektGroesse" text="Größe (m²)" prefWidth="120"/>
+                            <TableColumn fx:id="colObjektMietpreis" text="Mietpreis (€/Tag)" prefWidth="140"/>
+                            <TableColumn fx:id="colObjektVNr" text="VNr (Vermieter)" prefWidth="130"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Keine Objekte vorhanden."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ========== TAB 4: Vermietung (Rental) ========== -->
+            <Tab text="Vermietung">
+                <VBox spacing="12">
+                    <padding><Insets top="12" right="14" bottom="12" left="14"/></padding>
+
+                    <TitledPane text="Vermietung anlegen / bearbeiten" collapsible="false">
+                        <GridPane hgap="12" vgap="10">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <Label text="VMNr (Primärschlüssel):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <TextField fx:id="txtVermietungVMNr" promptText="z.B. 5001" prefWidth="160"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="MNr (Mieter FK):" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="cmbVermietungMNr" promptText="Mieter wählen" prefWidth="180"
+                                      GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                            <Label text="ONr (Objekt FK):" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="cmbVermietungONr" promptText="Objekt wählen" prefWidth="180"
+                                      GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+
+                            <Label text="Anfangsdatum:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <DatePicker fx:id="dpVermietungADatum" promptText="TT.MM.JJJJ" prefWidth="180"
+                                        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <Label text="Enddatum:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                            <DatePicker fx:id="dpVermietungEDatum" promptText="TT.MM.JJJJ" prefWidth="180"
+                                        GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                            <HBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                                  GridPane.columnSpan="6" alignment="CENTER_LEFT">
+                                <Button fx:id="btnVermietungAdd" text="➕ Hinzufügen" onAction="#onVermietungAdd"
+                                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermietungUpdate" text="✏️ Aktualisieren" onAction="#onVermietungUpdate"
+                                        style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermietungDelete" text="🗑️ Löschen" onAction="#onVermietungDelete"
+                                        style="-fx-background-color: #c0392b; -fx-text-fill: white;"/>
+                                <Button fx:id="btnVermietungClear" text="🧹 Felder leeren" onAction="#onVermietungClear"/>
+                            </HBox>
+                        </GridPane>
+                    </TitledPane>
+
+                    <TableView fx:id="tblVermietung" VBox.vgrow="ALWAYS" prefHeight="350">
+                        <columns>
+                            <TableColumn fx:id="colVermietungVMNr" text="VMNr" prefWidth="80"/>
+                            <TableColumn fx:id="colVermietungMNr" text="MNr (Mieter)" prefWidth="110"/>
+                            <TableColumn fx:id="colVermietungONr" text="ONr (Objekt)" prefWidth="110"/>
+                            <TableColumn fx:id="colVermietungADatum" text="Anfangsdatum" prefWidth="140"/>
+                            <TableColumn fx:id="colVermietungEDatum" text="Enddatum" prefWidth="140"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Keine Vermietungen vorhanden."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ========== TAB 5: Verfügbarkeit prüfen (Availability Check) ========== -->
+            <Tab text="🔍 Verfügbarkeit">
+                <VBox spacing="14">
+                    <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+                    <TitledPane text="Objekt-Verfügbarkeit prüfen" collapsible="false">
+                        <VBox spacing="12">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <Label text="Objekt:"/>
+                                <ComboBox fx:id="cmbCheckObjekt" promptText="Objekt wählen" prefWidth="200"/>
+
+                                <Label text="Datum prüfen:"/>
+                                <DatePicker fx:id="dpCheckDatum" promptText="TT.MM.JJJJ" prefWidth="180"/>
+
+                                <Button fx:id="btnCheckAvailability" text="🔍 Verfügbarkeit prüfen"
+                                        onAction="#onCheckAvailability"
+                                        style="-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            </HBox>
+
+                            <Separator/>
+
+                            <Label fx:id="lblAvailabilityResult" text="Bitte Objekt und Datum auswählen."
+                                   style="-fx-font-size: 15; -fx-padding: 8;"/>
+                        </VBox>
+                    </TitledPane>
+
+                    <TitledPane text="Objekt-Details (Größe &amp; Preis pro Tag)" collapsible="false">
+                        <VBox spacing="10">
+                            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <Label text="Objekt auswählen:"/>
+                                <ComboBox fx:id="cmbInfoObjekt" promptText="Objekt wählen" prefWidth="200"/>
+                                <Button fx:id="btnShowInfo" text="ℹ️ Details anzeigen" onAction="#onShowObjektInfo"
+                                        style="-fx-background-color: #2c3e50; -fx-text-fill: white;"/>
+                            </HBox>
+
+                            <Separator/>
+
+                            <GridPane hgap="14" vgap="8">
+                                <Label text="Größe:" style="-fx-font-weight: bold;"
+                                       GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <Label fx:id="lblInfoGroesse" text="—"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                                <Label text="Preis pro Tag:" style="-fx-font-weight: bold;"
+                                       GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <Label fx:id="lblInfoPreis" text="—"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            </GridPane>
+                        </VBox>
+                    </TitledPane>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+    <!-- ==================== BOTTOM: Status Bar ==================== -->
+    <bottom>
+        <HBox style="-fx-background-color: #ecf0f1; -fx-padding: 6 14 6 14;" alignment="CENTER_LEFT" spacing="20">
+            <Label fx:id="lblStatus" text="Bereit." style="-fx-text-fill: #2c3e50;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label text="Rent-IT © 2026" style="-fx-text-fill: #95a5a6; -fx-font-size: 11;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
